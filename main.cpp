@@ -127,23 +127,28 @@ void process(string ipath, string opath, string key, bool revert=false) {
         ofile.close();
         ifile.close();
 
-        cout << endl << "[i] Guardado (" << opath << ")";
+        cout << endl << "[i] " << processed_bytes_count << " Bytes processed" << endl;
+        cout << "[i] Saved (" << opath << ")";
 
         return;
     }
 
-    cout << "[!] Error al leer el archivo: " << ipath;
+    cout << "[!] Error: can't open file: " << ipath;
 }
 
 int main(int argc, char** argv) {
+    cout << "[i] C++ Simple crypto tool" << endl;
+    cout << "[i] coded by <edo0xff>" << endl;
+
     if (argc < 4) {
-        cout << "[!] Faltan parametros: " << endl;
-        cout << "    main.exe (-c|-d) archivo_entrada archivo_salida" << endl;
+        cout << "[!] Missing parameters: " << endl;
+        cout << "    main.exe -c input_file output_crypted_file" << endl;
+        cout << "    main.exe -d input_crypted_file output_original_file" << endl;
         return 0;
     }
 
     string clave;
-    cout << "[i] Ingresa la clave de cifrado: ";
+    cout << "[i] type a crypt key: ";
     getline(cin, clave);
 
     string ipath = argv[2];
@@ -152,17 +157,17 @@ int main(int argc, char** argv) {
     string option = argv[1];
 
     if (option == "-c") {
-        cout << "[i] Cifrando (" << ipath << ")... " << endl;
+        cout << "[i] Encrypting (" << ipath << ")... " << endl;
         process(ipath, opath, clave, false);
     }
 
     else if (option == "-d") {
-        cout << "[i] Decifrando (" << ipath << ")... " << endl;
+        cout << "[i] Decrypting (" << ipath << ")... " << endl;
         process(ipath, opath, clave, true);
     } 
     
     else {
-        cout << "[!] Error, opcion incorrecta: " << option << endl;
+        cout << "[!] Error, invalid option: " << option << endl;
     }
 
     return 0;
